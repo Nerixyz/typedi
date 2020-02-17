@@ -11,9 +11,6 @@
   },
   "main": "build/compiled/index.js",
   "types": "build/compiled/index.d.ts",
-  "files": [
-    "build/compiled"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/pleerock/typedi.git"
