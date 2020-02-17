@@ -6,8 +6,6 @@ const shell = require("gulp-shell");
 const replace = require("gulp-replace");
 const mocha = require("gulp-mocha");
 const chai = require("chai");
-const tslint = require("gulp-tslint");
-const stylish = require("tslint-stylish");
 const ts = require("gulp-typescript");
 const sourcemaps = require("gulp-sourcemaps");
 
@@ -133,20 +131,6 @@ export class Gulpfile {
     // -------------------------------------------------------------------------
     // Run tests tasks
     // -------------------------------------------------------------------------
-
-    /**
-     * Runs ts linting to validate source code.
-     */
-    @Task()
-    tslint() {
-        return gulp.src(["./src/**/*.ts", "./test/**/*.ts", "./sample/**/*.ts"])
-            .pipe(tslint())
-            .pipe(tslint.report(stylish, {
-                emitError: true,
-                sort: true,
-                bell: true
-            }));
-    }
 
     /**
      * Runs unit-tests.

@@ -112,7 +112,11 @@ export class ContainerInstance {
             const clonedService = Object.assign({}, service);
             clonedService.value = undefined;
             const value = this.getServiceValue(identifier, clonedService);
-            this.set(identifier, value);
+            this.set({
+                ...clonedService,
+                // @ts-ignore
+                type: identifier, id: identifier
+            }, undefined);
             return value;
         }
 

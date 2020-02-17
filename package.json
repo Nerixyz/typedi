@@ -9,6 +9,11 @@
     "name": "Umed Khudoiberdiev",
     "email": "pleerock.me@gmail.com"
   },
+  "main": "build/compiled/index.js",
+  "types": "build/compiled/index.d.ts",
+  "files": [
+    "build/compiled"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/pleerock/typedi.git"
@@ -27,29 +32,32 @@
   "dependencies": {},
   "devDependencies": {
     "@types/chai": "^4.0.5",
-    "@types/mocha": "^2.2.44",
-    "@types/node": "^8.0.53",
+    "@types/mocha": "^7.0.1",
+    "@types/node": "^10.17.15",
     "@types/sinon": "^4.0.0",
+    "@typescript-eslint/eslint-plugin": "^2.20.0",
+    "@typescript-eslint/parser": "^2.20.0",
     "chai": "^4.1.2",
     "del": "^3.0.0",
-    "gulp": "^3.9.1",
-    "gulp-mocha": "^3.0.1",
+    "eslint": "^6.8.0",
+    "gulp": "^4.0.2",
+    "gulp-mocha": "^7.0.2",
     "gulp-replace": "^0.6.1",
     "gulp-shell": "^0.6.3",
     "gulp-sourcemaps": "^2.6.1",
     "gulp-tslint": "^8.1.2",
-    "gulp-typescript": "^3.2.3",
-    "gulpclass": "^0.1.2",
-    "mocha": "^3.2.0",
+    "gulp-typescript": "^5.0.1",
+    "gulpclass": "^0.2.0",
+    "mocha": "^7.0.1",
     "reflect-metadata": "^0.1.10",
+    "rimraf": "^3.0.2",
     "sinon": "^4.1.2",
     "sinon-chai": "^2.14.0",
     "ts-node": "^3.3.0",
-    "tslint": "^5.8.0",
-    "tslint-stylish": "^2.1.0",
-    "typescript": "^2.6.1"
+    "typescript": "^3.7.5"
   },
   "scripts": {
-    "test": "gulp tests"
+    "test": "gulp tests",
+    "build": "rimraf dist && tsc -p tsconfig.build.json"
   }
 }

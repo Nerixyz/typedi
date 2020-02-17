@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import {Container} from "../../src/Container";
 import {Service} from "../../src/decorators/Service";
+const assert = require('assert');
 
 describe("Service Decorator", function() {
 
@@ -62,8 +63,8 @@ describe("Service Decorator", function() {
             }
         }
 
-        Container.get(Car).name.should.be.equal("BMW");
-        Container.get(Car).engine.serialNumber.should.be.equal("A-123");
+        assert.strictEqual(Container.get(Car).name, "BMW");
+        assert.strictEqual(Container.get(Car).engine.serialNumber, "A-123");
 
     });
 
@@ -94,8 +95,8 @@ describe("Service Decorator", function() {
             }
         }
 
-        Container.get(Car).name.should.be.equal("BMW");
-        Container.get(Car).engine.serialNumber.should.be.equal("A-123");
+        assert.strictEqual(Container.get(Car).name, "BMW");
+        assert.strictEqual(Container.get(Car).engine.serialNumber, "A-123");
 
     });
 
@@ -120,7 +121,7 @@ describe("Service Decorator", function() {
             }
         }
 
-        Container.get(Car).engine.type.should.be.equal("V6");
+        assert.strictEqual(Container.get(Car).engine.type, "V6");
 
     });
 
@@ -144,12 +145,41 @@ describe("Service Decorator", function() {
         const engine2Serial = Container.get(Engine).serial;
         const engine3Serial = Container.get(Engine).serial;
 
-        car1Serial.should.be.equal(car2Serial);
-        car1Serial.should.be.equal(car3Serial);
+        assert.strictEqual(car1Serial, car2Serial);
+        assert.strictEqual(car1Serial, car3Serial);
 
-        engine1Serial.should.not.be.equal(engine2Serial);
-        engine2Serial.should.not.be.equal(engine3Serial);
-        engine3Serial.should.not.be.equal(engine1Serial);
+        assert.notStrictEqual(engine1Serial, engine2Serial);
+        assert.notStrictEqual(engine2Serial, engine3Serial);
+        assert.notStrictEqual(engine3Serial, engine1Serial);
+    });
+
+    it("should support transient services in scoped containers", function() {
+
+        @Service()
+        class Car {
+            public serial = Math.random();
+        }
+
+        @Service({ transient: true })
+        class Engine {
+            public serial = Math.random();
+        }
+
+        const container = Container.of('container');
+        const car1Serial = container.get(Car).serial;
+        const car2Serial = container.get(Car).serial;
+        const car3Serial = container.get(Car).serial;
+
+        const engine1Serial = container.get(Engine).serial;
+        const engine2Serial = container.get(Engine).serial;
+        const engine3Serial = container.get(Engine).serial;
+
+        assert.strictEqual(car1Serial, car2Serial);
+        assert.strictEqual(car1Serial, car3Serial);
+
+        assert.notStrictEqual(engine1Serial, engine2Serial);
+        assert.notStrictEqual(engine2Serial, engine3Serial);
+        assert.notStrictEqual(engine3Serial, engine1Serial);
     });
 
     it("should support global services", function() {
@@ -167,20 +197,21 @@ describe("Service Decorator", function() {
         const globalContainer = Container;
         const scopedContainer = Container.of("enigma");
 
-        globalContainer.get(Car).name.should.be.equal("SportCar");
-        scopedContainer.get(Car).name.should.be.equal("SportCar");
+        assert.strictEqual(globalContainer.get(Car).name, "SportCar");
+        assert.strictEqual(globalContainer.get(Car).name, "SportCar");
+        assert.strictEqual(scopedContainer.get(Car).name, "SportCar");
 
-        globalContainer.get(Engine).name.should.be.equal("sporty");
-        scopedContainer.get(Engine).name.should.be.equal("sporty");
+        assert.strictEqual(globalContainer.get(Engine).name,"sporty");
+        assert.strictEqual(scopedContainer.get(Engine).name,"sporty");
 
         globalContainer.get(Car).name = "MyCar";
         globalContainer.get(Engine).name = "regular";
 
-        globalContainer.get(Car).name.should.be.equal("MyCar");
-        scopedContainer.get(Car).name.should.be.equal("MyCar");
+        assert.strictEqual(globalContainer.get(Car).name,"MyCar");
+        assert.strictEqual(scopedContainer.get(Car).name,"MyCar");
 
-        globalContainer.get(Engine).name.should.be.equal("regular");
-        scopedContainer.get(Engine).name.should.be.equal("sporty");
+        assert.strictEqual(globalContainer.get(Engine).name,"regular");
+        assert.strictEqual(scopedContainer.get(Engine).name,"sporty");
     });
 
 });
