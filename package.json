@@ -55,6 +55,7 @@
   },
   "scripts": {
     "test": "gulp tests",
-    "build": "rimraf dist && tsc -p tsconfig.build.json"
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
+    "prepare": "npm run build"
   }
 }
