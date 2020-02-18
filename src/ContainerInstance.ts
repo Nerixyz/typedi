@@ -72,30 +72,6 @@ export class ContainerInstance {
      * Retrieves the service with given name or type from the service container.
      * Optionally, parameters can be passed in case if instance is initialized in the container for the first time.
      */
-    get<T>(type: ObjectType<T>): T;
-
-    /**
-     * Retrieves the service with given name or type from the service container.
-     * Optionally, parameters can be passed in case if instance is initialized in the container for the first time.
-     */
-    get<T>(id: string): T;
-
-    /**
-     * Retrieves the service with given name or type from the service container.
-     * Optionally, parameters can be passed in case if instance is initialized in the container for the first time.
-     */
-    get<T>(id: Token<T>): T;
-
-    /**
-     * Retrieves the service with given name or type from the service container.
-     * Optionally, parameters can be passed in case if instance is initialized in the container for the first time.
-     */
-    get<T>(id: { service: T }): T;
-
-    /**
-     * Retrieves the service with given name or type from the service container.
-     * Optionally, parameters can be passed in case if instance is initialized in the container for the first time.
-     */
     get<T>(identifier: ServiceIdentifier<T>): T {
 
         const globalContainer = Container.of(undefined);
